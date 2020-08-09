@@ -5,7 +5,7 @@ var url = require("url"),
   XMLprocessors = require("xml2js/lib/processors");
 
 /**
- * @typedef {Object} CAS_options
+ * @typedef {Object} CasOptions
  * @property {string}  cas_url
  * @property {string}  service_url
  * @property {('1.0'|'2.0'|'3.0'|'saml1.1')} [cas_version='3.0']
@@ -22,7 +22,7 @@ var url = require("url"),
  */
 
 /**
- * @param {CAS_options} options
+ * @param {CasOptions} options
  * @constructor
  */
 function CasClient(options) {

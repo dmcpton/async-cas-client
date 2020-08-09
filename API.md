@@ -8,7 +8,7 @@
 ## Typedefs
 
 <dl>
-<dt><a href="#CAS_options">CAS_options</a> : <code>Object</code></dt>
+<dt><a href="#CasOptions">CasOptions</a> : <code>Object</code></dt>
 <dd></dd>
 <dt><a href="#ValidationResult">ValidationResult</a> : <code>Object</code></dt>
 <dd></dd>
@@ -30,7 +30,7 @@
 
 | Param | Type |
 | --- | --- |
-| options | [<code>CAS\_options</code>](#CAS_options) | 
+| options | [<code>CasOptions</code>](#CasOptions) | 
 
 <a name="CasClient+generateLoginUrl"></a>
 
@@ -52,9 +52,9 @@ Validates the ticket generate by the CAS login requester with the CAS login acce
 | --- | --- |
 | ticket | <code>string</code> | 
 
-<a name="CAS_options"></a>
+<a name="CasOptions"></a>
 
-## CAS\_options : <code>Object</code>
+## CasOptions : <code>Object</code>
 **Kind**: global typedef  
 **Properties**
 
