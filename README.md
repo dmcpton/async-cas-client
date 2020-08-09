@@ -18,16 +18,16 @@ npm install --save async-cas-client
 
 ## Usage
 
-This package provides an object that, when constructed, has two methods: `generateLoginUrl(serviceUrl)` and `validateTicket(ticket[, serviceUrl])`. (For complete API documentation, see [API.md](./API.md)).
+This package provides an object that, when constructed, has two methods: `generateLoginUrl(serviceUrl)` and `validateTicket(ticket[, serviceUrl])`. (For complete API documentation, see [API.md](./API.md)). It's important to note that `generateLoginUrl` is synchronous, and returns a string, while `validateTicket` returns a `Promise` which will either reject on any error (from network errors to authentication errors), or resolve to an object of the form `{ user, attributes }`. **This might change** in different minor versions -- see above -- as I haven't decided to treat authentication errors differently from all other errors yet.
 
-First, you must construct the `CasClient` object, like so:
+Construct a `CasClient` object like this:
 
 ```js
 var CasClient = require("async-cas-client");
 
 var casClient = new CasClient({
   cas_url: "https://my-cas-host.com/cas",
-  cas_version: "2.0",
+  cas_version: "3.0",
   renew: false,
   is_dev_mode: false,
   dev_mode_user: "",
@@ -35,8 +35,44 @@ var casClient = new CasClient({
 });
 ```
 
-Then, the two methods can be used. For example, to use the above configuration in an express app, you might do something like this:
+Then, the two methods can be used. For example, usage in an [express](https://expressjs.com/) app, might look something like this:
 
-TODO
+```js
+var app = require("express")();
+
+// create a new CasClient
+var casClient = new CasClient({
+  cas_url: "https://example.com/cas",
+  cas_version: "3.0",
+});
+
+app.get("/cas/login", (req, res) => {
+  // where `HOST` is an environment variable containing the URL the app is hosted at
+  res.redirect(casClient.generateLoginUrl(process.env.HOST + "/cas/verify"));
+});
+
+app.get("/cas/verify", (req, res) => {
+  casClient
+    .validateTicket(req.query.ticket)
+    .then(result => {
+      console.log(result.user + " logged in");
+      res.send("Hello, " + result.user + "!");
+    })
+    .catch(err => {
+      res.send("CAS authentication error: " + err);
+    });
+});
+```
+
+Obviously this is a very simple stub -- you would probably want to save the logged-in user in a session or similar, for one. But hopefully it's enough to get you started. (Submit an issue if it's not!)
 
 ## Options
+
+| Name          |              Type               | Description                                                                                                                            |   Default    |
+| :------------ | :-----------------------------: | :------------------------------------------------------------------------------------------------------------------------------------- | :----------: |
+| cas_url       |            _string_             | The URL of the CAS server.                                                                                                             | _(required)_ |
+| cas_version   | _"1.0"\|"2.0\|"3.0"\|"saml1.1"_ | The CAS protocol version.                                                                                                              |   _"3.0"_    |
+| renew         |            _boolean_            | If true, an unauthenticated client will be required to login to the CAS system regardless of whether a single sign-on session exists.  |   _false_    |
+| is_dev_mode   |            _boolean_            | If true, no CAS authentication will be used and the session CAS variable will be set to whatever user is specified as _dev_mode_user_. |   _false_    |
+| dev_mode_user |            _string_             | The CAS user to use if dev mode is active.                                                                                             |     _""_     |
+| dev_mode_info |            _Object_             | The CAS user information to use if dev mode is active.                                                                                 |     _{}_     |
