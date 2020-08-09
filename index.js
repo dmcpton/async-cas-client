@@ -146,7 +146,6 @@ function CasClient(options) {
   this.dev_mode_info = options.dev_mode_info !== undefined ? options.dev_mode_info : {};
 
   this.generateLoginUrl = this.generateLoginUrl.bind(this);
-  this.redirectToLogin = this.redirectToLogin.bind(this);
   this.validateTicket = this.validateTicket.bind(this);
 }
 
@@ -167,13 +166,6 @@ CasClient.prototype.generateLoginUrl = function () {
 
   // return the formatted URL
   return this.cas_url + url.format({ pathname: "/login", query: query });
-};
-
-/**
- * For convenience: Connect middleware that automatically redirects the request the CAS provider's login page.
- */
-CasClient.prototype.redirectToLogin = function (req, res, next) {
-  return res.redirect(this.generateLoginUrl);
 };
 
 /**
