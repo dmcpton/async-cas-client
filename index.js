@@ -172,11 +172,11 @@ CasClient.prototype.generateLoginUrl = function (serviceUrl) {
 
 /**
  * Validates the ticket generate by the CAS login requester with the CAS login accepter.
+ * @param {string} serviceUrl the URL of the service that is performing ticket validation
  * @param {string} ticket the ID of the ticket you wish to validate
- * @param {string} [serviceUrl] (SAML1.1 only) the URL of the service that is performing ticket validation
  * @returns {Promise} Promise object represents a @type {ValidationResult} object
  */
-CasClient.prototype.validateTicket = function (ticket, serviceUrl) {
+CasClient.prototype.validateTicket = function (serviceUrl, ticket) {
   // The body of this function is only lightly adapted (basically just wrapping it in a Promise) from
   // https://github.com/keeps/cas-authentication/blob/ed7cf4ddf98986f78c3aa68be93f427a9f7c7579/index.js
   return new Promise(

@@ -22,7 +22,7 @@
 * [CasClient](#CasClient)
     * [new CasClient(options)](#new_CasClient_new)
     * [.generateLoginUrl(serviceUrl)](#CasClient+generateLoginUrl) ⇒ <code>string</code>
-    * [.validateTicket(ticket, [serviceUrl])](#CasClient+validateTicket) ⇒ <code>Promise</code>
+    * [.validateTicket(serviceUrl, ticket)](#CasClient+validateTicket) ⇒ <code>Promise</code>
 
 <a name="new_CasClient_new"></a>
 
@@ -47,7 +47,7 @@ using the options passed in the initialization of this client.
 
 <a name="CasClient+validateTicket"></a>
 
-### casClient.validateTicket(ticket, [serviceUrl]) ⇒ <code>Promise</code>
+### casClient.validateTicket(serviceUrl, ticket) ⇒ <code>Promise</code>
 Validates the ticket generate by the CAS login requester with the CAS login accepter.
 
 **Kind**: instance method of [<code>CasClient</code>](#CasClient)  
@@ -55,8 +55,8 @@ Validates the ticket generate by the CAS login requester with the CAS login acce
 
 | Param | Type | Description |
 | --- | --- | --- |
+| serviceUrl | <code>string</code> | the URL of the service that is performing ticket validation |
 | ticket | <code>string</code> | the ID of the ticket you wish to validate |
-| [serviceUrl] | <code>string</code> | (SAML1.1 only) the URL of the service that is performing ticket validation |
 
 <a name="CasOptions"></a>
 
