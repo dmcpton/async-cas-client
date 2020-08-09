@@ -171,7 +171,7 @@ CasClient.prototype.generateLoginUrl = function () {
  * For convenience: Connect middleware that automatically redirects the request the CAS provider's login page.
  */
 CasClient.prototype.redirectToLogin = function (req, res, next) {
-  // TODO
+  return res.redirect(this.generateLoginUrl);
 };
 
 /**
