@@ -6,12 +6,12 @@ var url = require("url"),
 
 /**
  * @typedef {Object} CasOptions
- * @property {string}  cas_url
- * @property {('1.0'|'2.0'|'3.0'|'saml1.1')} [cas_version='3.0']
- * @property {boolean} [renew=false]
- * @property {boolean} [is_dev_mode=false]
- * @property {string}  [dev_mode_user='']
- * @property {Object}  [dev_mode_info={}]
+ * @property {string}  cas_url The URL of the CAS server.
+ * @property {('1.0'|'2.0'|'3.0'|'saml1.1')} [cas_version='3.0'] The CAS protocol version.
+ * @property {boolean} [renew=false] If true, an unauthenticated client will be required to login to the CAS system regardless of whether a single sign-on session exists.
+ * @property {boolean} [is_dev_mode=false] If true, no CAS authentication will be used and the session CAS variable will be set to whatever user is specified as _dev_mode_user_.
+ * @property {string}  [dev_mode_user=''] The CAS user to use if dev mode is active.
+ * @property {Object}  [dev_mode_info={}] The CAS user information to use if dev mode is active.
  */
 
 /**

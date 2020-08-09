@@ -64,14 +64,14 @@ Validates the ticket generate by the CAS login requester with the CAS login acce
 **Kind**: global typedef  
 **Properties**
 
-| Name | Type | Default |
-| --- | --- | --- |
-| cas_url | <code>string</code> |  | 
-| [cas_version] | <code>&#x27;1.0&#x27;</code> \| <code>&#x27;2.0&#x27;</code> \| <code>&#x27;3.0&#x27;</code> \| <code>&#x27;saml1.1&#x27;</code> | <code>&#x27;3.0&#x27;</code> | 
-| [renew] | <code>boolean</code> | <code>false</code> | 
-| [is_dev_mode] | <code>boolean</code> | <code>false</code> | 
-| [dev_mode_user] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | 
-| [dev_mode_info] | <code>Object</code> | <code>{}</code> | 
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| cas_url | <code>string</code> |  | The URL of the CAS server. |
+| [cas_version] | <code>&#x27;1.0&#x27;</code> \| <code>&#x27;2.0&#x27;</code> \| <code>&#x27;3.0&#x27;</code> \| <code>&#x27;saml1.1&#x27;</code> | <code>&#x27;3.0&#x27;</code> | The CAS protocol version. |
+| [renew] | <code>boolean</code> | <code>false</code> | If true, an unauthenticated client will be required to login to the CAS system regardless of whether a single sign-on session exists. |
+| [is_dev_mode] | <code>boolean</code> | <code>false</code> | If true, no CAS authentication will be used and the session CAS variable will be set to whatever user is specified as _dev_mode_user_. |
+| [dev_mode_user] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | The CAS user to use if dev mode is active. |
+| [dev_mode_info] | <code>Object</code> | <code>{}</code> | The CAS user information to use if dev mode is active. |
 
 <a name="ValidationResult"></a>
 
