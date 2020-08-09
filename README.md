@@ -20,7 +20,7 @@ npm install --save async-cas-client
 
 See the [full API documentation](https://github.com/dmcpton/async-cas-client/blob/master/API.md) for more details.
 
-This package provides an object that, when constructed, has two methods: `generateLoginUrl(serviceUrl)` and `validateTicket(ticket[, serviceUrl])`. It's important to note that `generateLoginUrl` is synchronous, and returns a string, while `validateTicket` returns a `Promise` which will either reject on any error (from network errors to authentication errors), or resolve to an object of the form `{ user, attributes }`. **This might change** in different minor versions -- see above -- as I haven't decided to treat authentication errors differently from all other errors yet.
+This package provides an object that, when constructed, has two methods: `generateLoginUrl(serviceUrl)` and `validateTicket(ticket[, serviceUrl])`. It's important to note that `generateLoginUrl` is synchronous, and returns a string, while `validateTicket` returns a `Promise` which will either reject on any error (from network errors to authentication errors), or resolve to an object of the form `{ user, attributes }`. **This might change** in different minor versions -- see above -- as I haven't decided whether or not to treat authentication errors differently from all other errors yet.
 
 Construct a `CasClient` object like this:
 
