@@ -37,7 +37,7 @@ var casClient = new CasClient({
 });
 ```
 
-Then, the two methods can be used. For example, usage in an [express](https://expressjs.com/) app, might look something like this:
+Then, the two methods can be used. For example, usage in an [express](https://expressjs.com/) app might look something like this:
 
 ```js
 var app = require("express")();
