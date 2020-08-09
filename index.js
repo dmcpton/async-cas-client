@@ -7,7 +7,6 @@ var url = require("url"),
 /**
  * @typedef {Object} CasOptions
  * @property {string}  cas_url
- * @property {string}  service_url
  * @property {('1.0'|'2.0'|'3.0'|'saml1.1')} [cas_version='3.0']
  * @property {boolean} [renew=false]
  * @property {boolean} [is_dev_mode=false]
@@ -33,9 +32,6 @@ function CasClient(options) {
   }
   if (options.cas_url === undefined) {
     throw new Error("CAS Authentication requires a cas_url parameter.");
-  }
-  if (options.service_url === undefined) {
-    throw new Error("CAS Authentication requires a service_url parameter.");
   }
 
   this.cas_version = options.cas_version !== undefined ? options.cas_version : "3.0";
@@ -143,8 +139,6 @@ function CasClient(options) {
   this.cas_port = parsed_cas_url.protocol === "http:" ? 80 : 443;
   this.cas_path = parsed_cas_url.pathname;
 
-  this.service_url = options.service_url;
-
   this.renew = options.renew !== undefined ? !!options.renew : false;
 
   this.is_dev_mode = options.is_dev_mode !== undefined ? !!options.is_dev_mode : false;
@@ -158,12 +152,14 @@ function CasClient(options) {
 /**
  * Generates the URL that a client should be redirected to in order to log in with the CAS provider,
  * using the options passed in the initialization of this client.
- * @return {string} the login URL
+ * @param {string} serviceUrl the URL of your service to which the client should be redirected to after
+ * they've logged in, where ticket validation will be performed
+ * @return {string} the login URL the client should be redirected to
  */
-CasClient.prototype.generateLoginUrl = function () {
+CasClient.prototype.generateLoginUrl = function (serviceUrl) {
   // derive the appropriate query params
   var query = {
-    service: this.service_url,
+    service: serviceUrl,
   };
 
   if (this.renew) {
@@ -176,10 +172,11 @@ CasClient.prototype.generateLoginUrl = function () {
 
 /**
  * Validates the ticket generate by the CAS login requester with the CAS login accepter.
- * @param {string} ticket
+ * @param {string} ticket the ID of the ticket you wish to validate
+ * @param {string} [serviceUrl] (SAML1.1 only) the URL of the service that is performing ticket validation
  * @returns {Promise} Promise object represents a @type {ValidationResult} object
  */
-CasClient.prototype.validateTicket = function (ticket) {
+CasClient.prototype.validateTicket = function (ticket, serviceUrl) {
   // The body of this function is only lightly adapted (basically just wrapping it in a Promise) from
   // https://github.com/keeps/cas-authentication/blob/ed7cf4ddf98986f78c3aa68be93f427a9f7c7579/index.js
   return new Promise(
@@ -194,7 +191,7 @@ CasClient.prototype.validateTicket = function (ticket) {
         requestOptions.path = url.format({
           pathname: this.cas_path + this._validateUri,
           query: {
-            service: this.service_url,
+            service: serviceUrl,
             ticket: ticket,
           },
         });
@@ -207,7 +204,7 @@ CasClient.prototype.validateTicket = function (ticket) {
           "  <SOAP-ENV:Body>\n" +
           '    <samlp:Request xmlns:samlp="urn:oasis:names:tc:SAML:1.0:protocol" MajorVersion="1"\n' +
           '      MinorVersion="1" RequestID="_' +
-          this.service_url +
+          serviceUrl +
           "." +
           now.getTime() +
           '"\n' +
@@ -227,7 +224,7 @@ CasClient.prototype.validateTicket = function (ticket) {
         requestOptions.path = url.format({
           pathname: this.cas_path + this._validateUri,
           query: {
-            TARGET: this.service_url,
+            TARGET: serviceUrl,
             ticket: "",
           },
         });

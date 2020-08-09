@@ -1,6 +1,6 @@
 {
   "name": "async-cas-client",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "An unopinionated Promise-based JS client for Apereo's Central Authentication Service",
   "main": "index.js",
   "scripts": {

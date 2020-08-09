@@ -21,8 +21,8 @@
 
 * [CasClient](#CasClient)
     * [new CasClient(options)](#new_CasClient_new)
-    * [.generateLoginUrl()](#CasClient+generateLoginUrl) ⇒ <code>string</code>
-    * [.validateTicket(ticket)](#CasClient+validateTicket) ⇒ <code>Promise</code>
+    * [.generateLoginUrl(serviceUrl)](#CasClient+generateLoginUrl) ⇒ <code>string</code>
+    * [.validateTicket(ticket, [serviceUrl])](#CasClient+validateTicket) ⇒ <code>Promise</code>
 
 <a name="new_CasClient_new"></a>
 
@@ -34,23 +34,29 @@
 
 <a name="CasClient+generateLoginUrl"></a>
 
-### casClient.generateLoginUrl() ⇒ <code>string</code>
+### casClient.generateLoginUrl(serviceUrl) ⇒ <code>string</code>
 Generates the URL that a client should be redirected to in order to log in with the CAS provider,
 using the options passed in the initialization of this client.
 
 **Kind**: instance method of [<code>CasClient</code>](#CasClient)  
-**Returns**: <code>string</code> - the login URL  
+**Returns**: <code>string</code> - the login URL the client should be redirected to  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| serviceUrl | <code>string</code> | the URL of your service to which the client should be redirected to after they've logged in, where ticket validation will be performed |
+
 <a name="CasClient+validateTicket"></a>
 
-### casClient.validateTicket(ticket) ⇒ <code>Promise</code>
+### casClient.validateTicket(ticket, [serviceUrl]) ⇒ <code>Promise</code>
 Validates the ticket generate by the CAS login requester with the CAS login accepter.
 
 **Kind**: instance method of [<code>CasClient</code>](#CasClient)  
 **Returns**: <code>Promise</code> - Promise object represents a @type {ValidationResult} object  
 
-| Param | Type |
-| --- | --- |
-| ticket | <code>string</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| ticket | <code>string</code> | the ID of the ticket you wish to validate |
+| [serviceUrl] | <code>string</code> | (SAML1.1 only) the URL of the service that is performing ticket validation |
 
 <a name="CasOptions"></a>
 
@@ -61,7 +67,6 @@ Validates the ticket generate by the CAS login requester with the CAS login acce
 | Name | Type | Default |
 | --- | --- | --- |
 | cas_url | <code>string</code> |  | 
-| service_url | <code>string</code> |  | 
 | [cas_version] | <code>&#x27;1.0&#x27;</code> \| <code>&#x27;2.0&#x27;</code> \| <code>&#x27;3.0&#x27;</code> \| <code>&#x27;saml1.1&#x27;</code> | <code>&#x27;3.0&#x27;</code> | 
 | [renew] | <code>boolean</code> | <code>false</code> | 
 | [is_dev_mode] | <code>boolean</code> | <code>false</code> | 
