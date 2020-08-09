@@ -4,7 +4,8 @@
   "description": "An unopinionated Promise-based JS client for Apereo's Central Authentication Service",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "docs": "jsdoc2md index.js > API.md"
   },
   "repository": {
     "type": "git",

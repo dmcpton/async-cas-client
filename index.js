@@ -16,6 +16,12 @@ var url = require("url"),
  */
 
 /**
+ * @typedef {Object} ValidationResult
+ * @property {string} user
+ * @property {Object} attributes
+ */
+
+/**
  * @param {CAS_options} options
  * @constructor
  */
