@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/dmcpton/async-cas-client.git"
   },
+  "dependencies": {
+    "xml2js": "^0.4.8"
+  },
   "keywords": [
     "async",
     "cas",
