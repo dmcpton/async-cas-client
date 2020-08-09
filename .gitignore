@@ -1,3 +1,6 @@
+# ignore package-lock.json because we want package.json to handle everything
+package-lock.json
+
 # Logs
 logs
 *.log

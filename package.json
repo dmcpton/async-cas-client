@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/dmcpton/async-cas-client/issues"
   },
-  "homepage": "https://github.com/dmcpton/async-cas-client#readme"
+  "homepage": "https://github.com/dmcpton/async-cas-client#readme",
+  "devDependencies": {
+    "jsdoc-to-markdown": "^6.0.1"
+  }
 }
