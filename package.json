@@ -1,6 +1,6 @@
 {
   "name": "async-cas-client",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An unopinionated Promise-based JS client for Apereo's Central Authentication Service",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "client"
   ],
   "author": "david@mcelroy.online",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dmcpton/async-cas-client/issues"
   },
