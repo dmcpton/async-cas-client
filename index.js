@@ -13,9 +13,6 @@ var url = require("url"),
  * @property {boolean} [is_dev_mode=false]
  * @property {string}  [dev_mode_user='']
  * @property {Object}  [dev_mode_info={}]
- * @property {string}  [session_name='cas_user']
- * @property {string}  [session_info=false]
- * @property {boolean} [destroy_session=false]
  */
 
 /**
@@ -145,69 +142,35 @@ function CasClient(options) {
   this.is_dev_mode = options.is_dev_mode !== undefined ? !!options.is_dev_mode : false;
   this.dev_mode_user = options.dev_mode_user !== undefined ? options.dev_mode_user : "";
   this.dev_mode_info = options.dev_mode_info !== undefined ? options.dev_mode_info : {};
+
+  this.generateLoginUrl = this.generateLoginUrl.bind(this);
+  this.redirectToLogin = this.redirectToLogin.bind(this);
+  this.validateTicket = this.validateTicket.bind(this);
 }
 
 /**
- * Handle a request with CAS authentication.
+ * Generates the URL that a client should be redirected to in order to log in with the CAS provider,
+ * using the options passed in the initialization of this client.
+ * @return {string} the login URL
  */
-CasClient.prototype._handle = function (req, res, next, authType) {
-  // If the session has been validated with CAS, no action is required.
-  if (req.session[this.session_name]) {
-    // If this is a bounce redirect, redirect the authenticated user.
-    if (authType === AUTH_TYPE.BOUNCE_REDIRECT) {
-      res.redirect(req.session.cas_return_to);
-    }
-    // Otherwise, allow them through to their request.
-    else {
-      next();
-    }
-  }
-  // If dev mode is active, set the CAS user to the specified dev user.
-  else if (this.is_dev_mode) {
-    req.session[this.session_name] = this.dev_mode_user;
-    req.session[this.session_info] = this.dev_mode_info;
-    next();
-  }
-  // If the authentication type is BLOCK, simply send a 401 response.
-  else if (authType === AUTH_TYPE.BLOCK) {
-    res.sendStatus(401);
-  }
-  // If there is a CAS ticket in the query string, validate it with the CAS server.
-  else if (req.query && req.query.ticket) {
-    this._handleTicket(req, res, next);
-  }
-  // Otherwise, redirect the user to the CAS login.
-  else {
-    this._login(req, res, next);
-  }
+CasClient.prototype.generateLoginUrl = function () {
+  // TODO
 };
 
 /**
- * Redirects the client to the CAS login.
+ * For convenience: Connect middleware that automatically redirects the request the CAS provider's login page.
  */
-CasClient.prototype._login = function (req, res, next) {
-  // Save the return URL in the session. If an explicit return URL is set as a
-  // query parameter, use that. Otherwise, just use the URL from the request.
-  req.session.cas_return_to = req.query.returnTo || url.parse(req.originalUrl).path;
+CasClient.prototype.redirectToLogin = function (req, res, next) {
+  // TODO
+};
 
-  // Set up the query parameters.
-
-  var query = {
-    service: this.service_url + url.parse(req.originalUrl).pathname,
-  };
-
-  if (this.renew) {
-    query.renew = this.renew;
-  }
-
-  // Redirect to the CAS login.
-  res.redirect(
-    this.cas_url +
-      url.format({
-        pathname: "/login",
-        query: query,
-      })
-  );
+/**
+ * Validates the ticket generate by the CAS login requester with the CAS login accepter.
+ * @param {string} ticket
+ * @returns {Promise} Promise object represents a @type {ValidationResult} object
+ */
+CasClient.prototype.validateTicket = function (ticket) {
+  // TODO
 };
 
 /**
