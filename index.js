@@ -156,7 +156,7 @@ function CasClient(options) {
  */
 CasClient.prototype.generateLoginUrl = function () {
   // derive the appropriate query params
-  const query = {
+  var query = {
     service: this.service_url,
   };
 
