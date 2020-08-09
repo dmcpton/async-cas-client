@@ -154,7 +154,17 @@ function CasClient(options) {
  * @return {string} the login URL
  */
 CasClient.prototype.generateLoginUrl = function () {
-  // TODO
+  // derive the appropriate query params
+  const query = {
+    service: this.service_url,
+  };
+
+  if (this.renew) {
+    query.renew = this.renew;
+  }
+
+  // return the formatted URL
+  return this.cas_url + url.format({ pathname: "/login", query: query });
 };
 
 /**
